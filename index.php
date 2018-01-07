@@ -33,7 +33,18 @@
     try {
 
         $dbh = new PDO("mysql:host=$hostname;dbname=pdo_test", $username, $password);
+        
+        # Provide a success message to front-end:
         echo '<p>Connected to Database</p>';
+
+        # Insert Data sample:
+        $count = $dbh->exec("INSERT INTO animals(animal_type, animal_name) VALUES ('kiwi', 'troy')");
+        
+        # Show an updated count upon success of executed statement:
+        echo '<p>' . $count . ' row(s) updated.</p>';
+        
+        # Close the database connection:
+        $dbh = null;
     } catch ( PDOException $error ){
 
         echo $error->getMessage();
