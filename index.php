@@ -24,4 +24,18 @@
         odbc
         sqlite
     */
+
+    # Let's now establish a connection:
+    $hostname = 'localhost';
+    $username = 'patrick';
+    $password = 'admin1';
+
+    try {
+
+        $dbh = new PDO("mysql:host=$hostname;dbname=pdo_test", $username, $password);
+        echo '<p>Connected to Database</p>';
+    } catch ( PDOException $error ){
+
+        echo $error->getMessage();
+    }
 ?>
