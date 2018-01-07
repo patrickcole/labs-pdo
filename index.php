@@ -8,21 +8,20 @@
      * Source: https://phpro.org/tutorials/Introduction-to-PHP-PDO.html
     */
 
-    # First, let's check what drivers are available in our PHP installation:
     /*
-    echo '<ul>';
+    # First, let's check what drivers are available in our PHP installation:
     
+    echo '<ul>';
     foreach(PDO::getAvailableDrivers() as $driver){
 
         echo '<li>' . $driver . '</li>';
     }
-
     echo '</ul>';
 
-        # The results were:
-        # mysql
-        # odbc
-        # sqlite
+    # The results were:
+    # mysql
+    # odbc
+    # sqlite
     */
 
     # Let's now establish a connection:
