@@ -1,12 +1,12 @@
 <?php
 
-    /*
+    /**
      * Title: PDO Introduction Sample
      * Author: Patrick Cole
      * Description: This sample is to get me started on connecting to databases
      * using PDO with real examples provided by the source tutorial.
      * Source: https://phpro.org/tutorials/Introduction-to-PHP-PDO.html
-    */
+    **/
 
     /*
     # First, let's check what drivers are available in our PHP installation:
@@ -32,6 +32,10 @@
 
     try {
 
+        /**
+         * DATABASE CONNECTION
+         * Establish a PDO object to handle all connection to MySQL database.
+        **/
         $dbh = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
         
         # Provide a success message to front-end:
@@ -45,6 +49,12 @@
         # Show an updated count upon success of executed statement:
         echo '<p>' . $count . ' row(s) updated.</p>';
         */
+
+        
+        # Added an update command to show how to do so with PDO:
+        $count = $dbh->exec("UPDATE animals SET animal_name='bruce' WHERE animal_name='troy'");
+
+        echo '<p>' . $count . ' rows updated.</p>';
 
         # Now perform a select query:
         $sql = "SELECT * FROM animals";
