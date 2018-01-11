@@ -4,27 +4,17 @@
      * Title: PDO Introduction Sample
      * Author: Patrick Cole
      * Description: This sample is to get me started on connecting to databases
-     * using PDO with real examples provided by the source tutorial.
+     * using PDO with real examples provided by the source tutorial. This file is
+     * formatted in a manner with comments for each test/section to show progress.
+     * Ideally in a production environment the comments would be less related to
+     * testing and more indicative of actual logic and functionality.
      * Source: https://phpro.org/tutorials/Introduction-to-PHP-PDO.html
     **/
 
-    /*
-    # First, let's check what drivers are available in our PHP installation:
-    
-    echo '<ul>';
-    foreach(PDO::getAvailableDrivers() as $driver){
-
-        echo '<li>' . $driver . '</li>';
-    }
-    echo '</ul>';
-
-    # The results were:
-    # mysql
-    # odbc
-    # sqlite
-    */
-
-    # Let's now establish a connection:
+    /**
+     * Configuration
+     * Description: Variables related to the database connection.
+     */
     $hostname = 'localhost';
     $username = 'patrick';
     $password = 'admin1';
@@ -33,37 +23,64 @@
     try {
 
         /**
-         * DATABASE CONNECTION
-         * Establish a PDO object to handle all connection to MySQL database.
-        **/
+         * Section: Check available PDO drivers
+         * Description: Loop through the PDO object and see what drivers are available.
+         **/
+        echo '<ul>';
+        foreach(PDO::getAvailableDrivers() as $pdoDriver){
+
+            echo '<li>' . $pdoDriver . '</li>';
+        }
+        echo '</ul>';
+
+        /**
+         * Section: Database Connection
+         * Description: Establish database connection through a PDO object. Also provide
+         * a success message to the front-end for debugging.
+         **/
         $dbh = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
-        
-        # Provide a success message to front-end:
         echo '<p>Connected to Database</p>';
 
-        /*
-        # Insert Data sample:
-        # exec() method is best for when no result set is expected:
-        $count = $dbh->exec("INSERT INTO animals(animal_type, animal_name) VALUES ('kiwi', 'troy')");
-        
-        # Show an updated count upon success of executed statement:
-        echo '<p>' . $count . ' row(s) updated.</p>';
-        */
+        /**
+         * Section: SQL Insert Sample
+         * Description: A simple INSERT command to get started with PDO->exec(). Note: the
+         * exec() method is best suited for statements in which no result set is expected.
+         * --------------------------
+         * Status: Section Completed
+         * --------------------------
+         * $insertCount_int = $dbh->exec("INSERT INTO animals(animal_type, animal_name) VALUES ('kiwi', 'troy')");
+         * echo '<p>' . $insertCount_int . ' row(s) updated.</p>';
+         **/
 
-        
-        # Added an update command to show how to do so with PDO:
-        $count = $dbh->exec("UPDATE animals SET animal_name='bruce' WHERE animal_name='troy'");
+        /**
+         * Section: SQL Update Sample
+         * Description: Using existing data, perform an update command using a specific
+         * condition. Again, no result set is needed so a PDO->exec() is fine.
+         * --------------------------
+         * Status: Section Completed
+         * --------------------------
+         * $count = $dbh->exec("UPDATE animals SET animal_name='bruce' WHERE animal_name='troy'");
+         * echo '<p>' . $count . ' rows updated.</p>';
+         **/
 
-        echo '<p>' . $count . ' rows updated.</p>';
-
-        # Now perform a select query:
-        $sql = "SELECT * FROM animals";
-        foreach ( $dbh->query($sql) as $row){
+         /**
+          * Section: SQL Select Data
+          * Description: Display all data from the table and using PDO->query(). The 
+          * resulting set will then be iterated over using foreach to print each result.
+          */
+        $selectCommand = "SELECT * FROM animals";
+        echo '<ul>';
+        foreach ( $dbh->query($selectCommand) as $selectResult){
             
-            print $row['animal_type'] . ' - ' . $row['animal_name'] . '<br />';
+            echo '<li>' . $selectResult['animal_type'] . ' - ' . $selectResult['animal_name'] . '</li>';
         }
+        echo '</ul>';
 
-        # Close the database connection:
+        /**
+         * Section: Clean Up Tasks
+         * Description: Close the connection to the database and perform any additional
+         * clean up tasks.
+         */
         $dbh = null;
     } catch ( PDOException $error ){
 
