@@ -28,10 +28,11 @@
     $hostname = 'localhost';
     $username = 'patrick';
     $password = 'admin1';
+    $database = 'pdo_test';
 
     try {
 
-        $dbh = new PDO("mysql:host=$hostname;dbname=pdo_test", $username, $password);
+        $dbh = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
         
         # Provide a success message to front-end:
         echo '<p>Connected to Database</p>';
