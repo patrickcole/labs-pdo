@@ -27,8 +27,7 @@
         /**
          * Section: SQL variables and statement
         **/
-        $animal_id = 6;
-        $animal_name = 'bruce';
+        $data = array('animal_id' => 6, 'animal_name' => 'bruce');
         $stmt = $dbh->prepare("SELECT * FROM animals WHERE animal_id = :animal_id AND animal_name = :animal_name");
 
         /**
@@ -38,11 +37,10 @@
         $stmt->bindParam(':animal_name', $animal_name, PDO::PARAM_STR, 5);
 
         /*** reassign the animal_id ***/
-        $animal_id = 3;
-        $animal_name = 'kevin';
+        $data = array('animal_id' => 3, 'animal_name' => 'bruce');
 
         /*** execute the prepared statement ***/
-        $stmt->execute();
+        $stmt->execute( $data );
 
         /*** loop over the results ***/
         while($row = $stmt->fetch()) {
@@ -53,11 +51,10 @@
         }
 
         /*** reassign the animal_id ***/
-        $animal_id = 7;
-        $animal_name = 'bruce';
+        $data = array('animal_id' => 4, 'animal_name' => 'bruce');
 
         /*** execute the prepared statement ***/
-        $stmt->execute();
+        $stmt->execute( $data );
 
         /*** loop over the results ***/
         while($row = $stmt->fetch()) {
@@ -68,10 +65,10 @@
         }
 
         /*** reassign the animal_id ***/
-        $animal_id = 4;
+        $data = array('animal_id' => 9, 'animal_name' => 'bruce');
         
         /*** execute the prepared statement ***/
-        $stmt->execute();
+        $stmt->execute( $data );
 
         /*** loop over the results ***/
         while($row = $stmt->fetch()) {
