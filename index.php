@@ -73,8 +73,28 @@
         # Perform the query into a PDOStatement object:
         $queryStatement = $dbh->query($selectCommand);
 
+        /**
+         * Section: Fetch Result Class
+         * Description: A sample Animal class to handle the database result.
+        **/
+        class Animal {
+
+            public $animal_id;
+            public $animal_type;
+            public $animal_name;
+
+            public function capitalizeType(){
+                
+                return ucwords($this->animal_type);
+            }
+        }
+
         # Assign the fetch mode:
-        $queryResult = $queryStatement->fetch(PDO::FETCH_OBJ);
+        # For all fetch modes except CLASS use this:
+        // $queryResult = $queryStatement->fetch(PDO::FETCH_OBJ);
+        
+        # To use a class, use this:
+        $queryResult = $queryStatement->fetchALL(PDO::FETCH_CLASS, 'Animal');
 
         /**
          * Section: Fetch Modes (ASSOC, NUM, BOTH)
@@ -93,10 +113,26 @@
         /**
          * Section: Fetch Modes (OBJ)
          * Description: Sample output using FETCH_OBJ
+         * --------------------------
+         * Status: Section Completed
+         * --------------------------
+         * echo $queryResult->animal_id . "<br />";
+         * echo $queryResult->animal_type . "<br />";
+         * echo $queryResult->animal_name;
         **/
-        echo $queryResult->animal_id . "<br />";
-        echo $queryResult->animal_type . "<br />";
-        echo $queryResult->animal_name;
+
+        
+
+        /**
+         * Section: Fetch Class Result Sample
+         * Description: Using the Animal class and PDO::FETCH_CLASS, render the results.
+        **/
+        echo '<ul>';
+        foreach( $queryResult as $animal ){
+
+            echo '<li>' . $animal->capitalizeType() . '</li>';
+        }
+        echo '</ul>';
 
         /**
          * Section: Clean Up Tasks
