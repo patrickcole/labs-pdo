@@ -14,7 +14,7 @@
     /**
      * Configuration
      * Description: Variables related to the database connection.
-     */
+    **/
     $hostname = 'localhost';
     $username = 'patrick';
     $password = 'admin1';
@@ -25,7 +25,7 @@
         /**
          * Section: Check available PDO drivers
          * Description: Loop through the PDO object and see what drivers are available.
-         **/
+        **/
         echo '<ul>';
         foreach(PDO::getAvailableDrivers() as $pdoDriver){
 
@@ -50,7 +50,7 @@
          * --------------------------
          * $insertCount_int = $dbh->exec("INSERT INTO animals(animal_type, animal_name) VALUES ('kiwi', 'troy')");
          * echo '<p>' . $insertCount_int . ' row(s) updated.</p>';
-         **/
+        **/
 
         /**
          * Section: SQL Update Sample
@@ -61,20 +61,42 @@
          * --------------------------
          * $count = $dbh->exec("UPDATE animals SET animal_name='bruce' WHERE animal_name='troy'");
          * echo '<p>' . $count . ' rows updated.</p>';
-         **/
+        **/
 
-         /**
-          * Section: SQL Select Data
-          * Description: Display all data from the table and using PDO->query(). The 
-          * resulting set will then be iterated over using foreach to print each result.
-          */
+        /**
+         * Section: SQL Select Data
+         * Description: Display all data from the table and using PDO->query(). The 
+         * resulting set will then be iterated over using foreach to print each result.
+        **/
         $selectCommand = "SELECT * FROM animals";
-        echo '<ul>';
-        foreach ( $dbh->query($selectCommand) as $selectResult){
-            
-            echo '<li>' . $selectResult['animal_type'] . ' - ' . $selectResult['animal_name'] . '</li>';
-        }
-        echo '</ul>';
+
+        # Perform the query into a PDOStatement object:
+        $queryStatement = $dbh->query($selectCommand);
+
+        # Assign the fetch mode:
+        $queryResult = $queryStatement->fetch(PDO::FETCH_OBJ);
+
+        /**
+         * Section: Fetch Modes (ASSOC, NUM, BOTH)
+         * Description: Sample output using the modes listed above.
+         * --------------------------
+         * Status: Section Completed
+         * --------------------------
+         * echo '<ul>';
+         * foreach ( $queryResult as $key => $val ){
+         * 
+         * echo '<li><strong>' . $key . ' - ' . $val . '</li>';
+         * }
+         * echo '</ul>';
+        **/
+
+        /**
+         * Section: Fetch Modes (OBJ)
+         * Description: Sample output using FETCH_OBJ
+        **/
+        echo $queryResult->animal_id . "<br />";
+        echo $queryResult->animal_type . "<br />";
+        echo $queryResult->animal_name;
 
         /**
          * Section: Clean Up Tasks
