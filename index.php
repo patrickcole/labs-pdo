@@ -68,10 +68,12 @@
          * Description: Display all data from the table and using PDO->query(). The 
          * resulting set will then be iterated over using foreach to print each result.
         **/
-        $selectCommand = "SELECT * FROM animals";
+        
+        # Correct SQL command:
+        // $selectCommand = "SELECT * FROM animals";
 
         # Perform the query into a PDOStatement object:
-        $queryStatement = $dbh->query($selectCommand);
+        // $queryStatement = $dbh->query($selectCommand);
 
         /**
          * Section: Fetch Result Class
@@ -94,7 +96,7 @@
         // $queryResult = $queryStatement->fetch(PDO::FETCH_OBJ);
         
         # To use a class, use this:
-        $queryResult = $queryStatement->fetchALL(PDO::FETCH_CLASS, 'Animal');
+        // $queryResult = $queryStatement->fetchALL(PDO::FETCH_CLASS, 'Animal');
 
         /**
          * Section: Fetch Modes (ASSOC, NUM, BOTH)
@@ -121,18 +123,52 @@
          * echo $queryResult->animal_name;
         **/
 
-        
-
         /**
          * Section: Fetch Class Result Sample
          * Description: Using the Animal class and PDO::FETCH_CLASS, render the results.
+         * echo '<ul>';
+         * foreach( $queryResult as $animal ){
+         * 
+         * echo '<li>' . $animal->capitalizeType() . '</li>';
+         * }
+         * echo '</ul>';
         **/
-        echo '<ul>';
-        foreach( $queryResult as $animal ){
 
-            echo '<li>' . $animal->capitalizeType() . '</li>';
+        /**
+         * Section: PDO Error Reporting
+         * Description: This sets the error reporting attribute.
+         * ERRMODE_EXCEPTION - Errors are caught in exception.
+         * ERRMODE_WARNING - Errors are displayed as warnings.
+         * ERRMODE_SILENT - Does not display SQL statement errors.
+         */
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
+
+        /**
+         * Section: Error sample
+         * Description: This section uses the incorrect SQL statement to trigger 
+         * a PDO error.
+         */
+        $selectCommand = "SELECT username FROM animals";
+        
+        echo '<ul>';
+        foreach($dbh->query($selectCommand) as $row){
+
+            echo '<li>' . $row['animal_type' ] . ' - ' . $row['animal_name'] . '</li>';
         }
         echo '</ul>';
+
+        /**
+         * Section: PDO Error Data
+         * Description: Display the error code and information related to error.
+         */
+        echo '<p>Error code: ' . $dbh->errorCode() . '</p>';
+        echo '<ul>';
+        foreach( $dbh->errorInfo() as $error ){
+            
+            echo '<li>' . $error . '</li>';
+        }
+        echo '</ul>';
+
 
         /**
          * Section: Clean Up Tasks
