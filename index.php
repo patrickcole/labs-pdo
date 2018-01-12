@@ -3,6 +3,7 @@
     /**
      * Title: PDO Introduction Sample
      * Author: Patrick Cole
+     * Version: 1.0.20180111.n
      * Description: This sample is to get me started on connecting to databases
      * using PDO with real examples provided by the source tutorial. This file is
      * formatted in a manner with comments for each test/section to show progress.
