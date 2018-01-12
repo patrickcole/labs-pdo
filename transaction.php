@@ -3,15 +3,16 @@
 $hostname = 'localhost';
 
 /*** mysql username ***/
-$username = 'username';
+$username = 'patrick';
 
 /*** mysql password ***/
-$password = 'password';
+$password = 'admin1';
 
 /*** database name ***/
-$dbname = 'animals';
+$dbname = 'pdo_test';
 
 try {
+
     $dbh = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     /*** echo a message saying we have connected ***/
     echo 'Connected to database<br />';
