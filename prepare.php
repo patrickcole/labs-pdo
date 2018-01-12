@@ -37,17 +37,49 @@
         $stmt->bindParam(':animal_id', $animal_id, PDO::PARAM_INT);
         $stmt->bindParam(':animal_name', $animal_name, PDO::PARAM_STR, 5);
 
+        /*** reassign the animal_id ***/
+        $animal_id = 3;
+        $animal_name = 'kevin';
+
+        /*** execute the prepared statement ***/
         $stmt->execute();
 
-        $result = $stmt->fetchAll();
+        /*** loop over the results ***/
+        while($row = $stmt->fetch()) {
 
-        echo '<ul>';
-        foreach($result as $row){
-            
-            echo '<li>' . $row['animal_id'] . ' - ' . $row['animal_type'] . ' - ' . $row['animal_name'] . '</li>';
+            echo $row['animal_id'].'<br />';
+            echo $row['animal_type'].'<br />';
+            echo $row['animal_name'].'<br />';
         }
-        echo '</ul>';
 
+        /*** reassign the animal_id ***/
+        $animal_id = 7;
+        $animal_name = 'bruce';
+
+        /*** execute the prepared statement ***/
+        $stmt->execute();
+
+        /*** loop over the results ***/
+        while($row = $stmt->fetch()) {
+
+            echo $row['animal_id'].'<br />';
+            echo $row['animal_type'].'<br />';
+            echo $row['animal_name'].'<br />';
+        }
+
+        /*** reassign the animal_id ***/
+        $animal_id = 4;
+        
+        /*** execute the prepared statement ***/
+        $stmt->execute();
+
+        /*** loop over the results ***/
+        while($row = $stmt->fetch()) {
+
+            echo $row['animal_id'].'<br />';
+            echo $row['animal_type'].'<br />';
+            echo $row['animal_name'];
+        }
 
         /**
          * Section: Clean Up Tasks
